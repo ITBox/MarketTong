@@ -33,9 +33,13 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/contact_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+         android:cacheColorHint="#00000000"
+        android:fadingEdge="none"
+        android:listSelector="#00000000"
+        android:scrollbars="none" >
     </ListView>
     
 </LinearLayout>
