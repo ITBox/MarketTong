@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主色调薄荷绿 rgb(0,198,180) -->
+    <color name="bg_master">#00C6B4</color>
+     <!-- 浅薄荷绿 rgb(5,234,214) -->
+    <color name="bg_light_master">#05EAD6</color>
+    <color name="bg_dark_master">#03B4A5</color>
+    
+    <drawable name="bg_item_gray">#FFF0F0F0</drawable>
+</resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/selector_pressed_white_gray"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="15dip"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:baselineAlignBottom="true"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:id="@+id/item_contact_user"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/item_more"
+            android:layout_toRightOf="@id/iv_left"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/item_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:textColor="#ff000000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/item_user_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:textColor="#ff038dce"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_user_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:textColor="#ffb6b4b5"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_item_home_more" />
+    </RelativeLayout>
+
+    <!-- <ImageView -->
+    <!-- android:id="@+id/iv_bottom" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="2dp" -->
+    <!-- android:layout_below="@id/ll" -->
+    <!-- android:scaleType="centerCrop" /> -->
+
+</LinearLayout>
