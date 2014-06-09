@@ -154,10 +154,10 @@ containing a value of this type.
         public static final int top_transparent_light_holo=0x7f020025;
     }
     public static final class id {
-        public static final int arrow_down=0x7f090015;
-        public static final int arrow_up=0x7f090014;
+        public static final int arrow_down=0x7f090016;
+        public static final int arrow_up=0x7f090015;
         public static final int container=0x7f090006;
-        public static final int imageview=0x7f090016;
+        public static final int imageview=0x7f090017;
         public static final int item_contact_user=0x7f09000c;
         public static final int item_more=0x7f09000d;
         public static final int item_user_company=0x7f090010;
@@ -169,12 +169,13 @@ containing a value of this type.
         public static final int listView1=0x7f090004;
         public static final int list_view=0x7f090005;
         public static final int ll=0x7f09000a;
-        public static final int loading_tv=0x7f090011;
+        public static final int loading=0x7f090011;
+        public static final int loading_tv=0x7f090012;
         public static final int mime_setting=0x7f090008;
         public static final int realtabcontent=0x7f090007;
-        public static final int scroller=0x7f090012;
+        public static final int scroller=0x7f090013;
         public static final int search_ll=0x7f090003;
-        public static final int tracks=0x7f090013;
+        public static final int tracks=0x7f090014;
         public static final int tv=0x7f090002;
         public static final int tv_title=0x7f090001;
     }
@@ -190,9 +191,10 @@ containing a value of this type.
         public static final int horiz_separator=0x7f030008;
         public static final int item_list_home=0x7f030009;
         public static final int loading=0x7f03000a;
-        public static final int popup_horizontal=0x7f03000b;
-        public static final int popup_vertical=0x7f03000c;
-        public static final int tab_item_view=0x7f03000d;
+        public static final int loading_meaasge=0x7f03000b;
+        public static final int popup_horizontal=0x7f03000c;
+        public static final int popup_vertical=0x7f03000d;
+        public static final int tab_item_view=0x7f03000e;
     }
     public static final class string {
         public static final int action_settings=0x7f070002;

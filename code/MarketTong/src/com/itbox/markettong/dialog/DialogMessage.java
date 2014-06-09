@@ -21,7 +21,7 @@ public class DialogMessage extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final Dialog dialog = new Dialog(getActivity(), R.style.dialog);
-		View view = View.inflate(getActivity(), R.layout.loading, null);
+		View view = View.inflate(getActivity(), R.layout.loading_meaasge, null);
 		dialog.setContentView(view);
 		mTitle = (TextView) view.findViewById(R.id.loading_tv);
 		return dialog;
