@@ -14,9 +14,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-public class ContactAdapter extends BaseAdapter {
+public class ContactAdapter extends BaseAdapter implements SectionIndexer{
     
 	private Context ctx;
 	private ArrayList<ContactsBean> list;
@@ -81,5 +82,30 @@ public class ContactAdapter extends BaseAdapter {
 			ButterKnife.inject(this, view);
 		}
 		
+	}
+
+	@Override
+	public Object[] getSections() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getPositionForSection(int sectionIndex) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < list.size(); i++) {
+			String letter = list.get(i).getLetter();
+			char firstChar = letter.toUpperCase().charAt(0);
+			if (firstChar == sectionIndex) {
+				return i;
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public int getSectionForPosition(int position) {
+		// TODO Auto-generated method stub
+		return 0;
 	} 
 }
