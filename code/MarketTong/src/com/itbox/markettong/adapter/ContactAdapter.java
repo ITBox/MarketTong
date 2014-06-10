@@ -39,7 +39,11 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 
 	@Override
 	public Object getItem(int position) {
-		return list.get(position);
+		if (position >= 0 && position < list.size()) {
+			return list.get(position);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -70,20 +74,6 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		return convertView;
 	}
 	
-	class ContactHolder {
-        @InjectView(R.id.contact_userPhoto)
-        SmartImageView mContactPhoto;
-        @InjectView(R.id.contact_userName)
-        TextView mContactUserName;
-        @InjectView(R.id.contact_userCompany)
-        TextView mContactUserCompany;
-        
-		public ContactHolder(View view) {
-			ButterKnife.inject(this, view);
-		}
-		
-	}
-
 	@Override
 	public Object[] getSections() {
 		// TODO Auto-generated method stub
@@ -100,7 +90,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 				return i;
 			}
 		}
-		return 0;
+		return -1;
 	}
 
 	@Override
@@ -108,4 +98,18 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		// TODO Auto-generated method stub
 		return 0;
 	} 
+	
+	class ContactHolder {
+        @InjectView(R.id.contact_userPhoto)
+        SmartImageView mContactPhoto;
+        @InjectView(R.id.contact_userName)
+        TextView mContactUserName;
+        @InjectView(R.id.contact_userCompany)
+        TextView mContactUserCompany;
+        
+		public ContactHolder(View view) {
+			ButterKnife.inject(this, view);
+		}
+		
+	}
 }

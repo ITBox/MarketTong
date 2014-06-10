@@ -10,6 +10,7 @@ public class Utils {
 		if (TextUtils.isEmpty(text)) {
 			view.setVisibility(View.GONE);
 		} else {
+			view.setVisibility(View.VISIBLE);
 			view.setText(text);
 		}
 	}
