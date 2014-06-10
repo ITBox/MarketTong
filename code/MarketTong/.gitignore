@@ -1,2 +1,4 @@
-/libs
-/assets
+/.apt_generated
+/bin
+/gen
+/.settings
