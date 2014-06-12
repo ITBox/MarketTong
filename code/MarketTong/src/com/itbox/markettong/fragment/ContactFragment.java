@@ -35,6 +35,8 @@ import android.widget.TextView;
 public class ContactFragment extends BaseFragment implements OnItemClickListener{
     @InjectView(R.id.search_ll)
     LinearLayout mSearchLL;
+    @InjectView(R.id.search_tv)
+    TextView mSearchUserNum;
     @InjectView(R.id.contact_listview)
     ListView mLLContact;
     @InjectView(R.id.sideBar)
@@ -108,6 +110,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 			}
 			cursor.close();
 			if (contactList.size() > 0) {
+				mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
 				contactAdapter.setNewList(contactList);
 			}
 		}

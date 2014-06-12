@@ -8,9 +8,13 @@ import butterknife.InjectView;
 import com.itbox.markettong.R;
 import com.itbox.markettong.bean.ContactsBean;
 import com.itbox.markettong.util.Utils;
-import com.loopj.android.image.SmartImageView;
+import com.itbox.markettong.widget.CircleImageView;
+import com.squareup.picasso.Picasso;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -54,7 +58,6 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ContactHolder contactHolder = null;
-		ContactsBean bean = (ContactsBean) getItem(position);
 		if (convertView == null) {
 			convertView = View.inflate(ctx, R.layout.item_list_contact, null);
 			contactHolder = new ContactHolder(convertView);
@@ -62,11 +65,13 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		} else {
 			contactHolder = (ContactHolder) convertView.getTag();
 		}
+		ContactsBean bean = (ContactsBean) getItem(position);
 		long photoId = bean.getPhotoId();
 		if (photoId == 0) {
-			contactHolder.mContactPhoto.setImageResource(R.drawable.contacts_none_localcontacts_icon);
+			contactHolder.mContactPhoto.setImageResource(R.drawable.ic_contact_head);
 		} else {
-			contactHolder.mContactPhoto.setImageContact(bean.getId());
+			Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, bean.getId());
+			Picasso.with(ctx).load(uri).placeholder(R.drawable.ic_contact_head).into(contactHolder.mContactPhoto);
 		}
 		
 		Utils.nullGone(contactHolder.mContactUserName, bean.getName());
@@ -101,7 +106,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 	
 	class ContactHolder {
         @InjectView(R.id.contact_userPhoto)
-        SmartImageView mContactPhoto;
+        CircleImageView mContactPhoto;
         @InjectView(R.id.contact_userName)
         TextView mContactUserName;
         @InjectView(R.id.contact_userCompany)
