@@ -119,6 +119,8 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
+		ContactsBean contact = (ContactsBean) contactAdapter.getItem(position);
+		ContactsBean contactInfo = ContactLoader.queryContactInfo(mActThis, contact);
 		
 	}
 }
