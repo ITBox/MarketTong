@@ -69,8 +69,12 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 	@Override
 	public void onResume() {
 		super.onResume();
-		contactList.clear();
-		queryHandler.startQuery(0, null, ContactsContract.Contacts.CONTENT_URI, ContactLoader.PROJECTION, null, null, "sort_key_alt");
+//		contactList.clear();
+		if (contactList != null && contactList.size() > 0) {
+			mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
+		} else {
+			queryHandler.startQuery(0, null, ContactsContract.Contacts.CONTENT_URI, ContactLoader.PROJECTION, null, null, "sort_key_alt");
+		}
 	}
 	
 	@OnClick(R.id.search_ll)
@@ -106,7 +110,8 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 //					contactList.add(section);
 //					tmp = bean.getLetter();
 //				}
-				contactList.add(bean);
+				ContactsBean queryContactInfo = ContactLoader.queryContactInfo(mActThis, bean);
+				contactList.add(queryContactInfo);
 			}
 			cursor.close();
 			if (contactList.size() > 0) {

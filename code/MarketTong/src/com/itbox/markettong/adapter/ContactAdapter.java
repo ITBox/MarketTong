@@ -76,9 +76,8 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 			contactHolder.mContactPhoto.setImageResource(R.drawable.ic_contact_head);
 		}
 		
-		ContactsBean contactInfo = ContactLoader.queryContactInfo(ctx, bean);
-		Utils.nullGone(contactHolder.mContactUserName, contactInfo.getName());
-		Utils.nullGone(contactHolder.mContactUserCompany, contactInfo.getCompanyName());
+		Utils.nullGone(contactHolder.mContactUserName, bean.getName());
+		Utils.nullGone(contactHolder.mContactUserCompany, bean.getCompanyName());
 		return convertView;
 	}
 	
