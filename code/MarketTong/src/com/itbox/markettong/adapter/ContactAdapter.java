@@ -7,7 +7,6 @@ import butterknife.InjectView;
 
 import com.itbox.markettong.R;
 import com.itbox.markettong.bean.ContactsBean;
-import com.itbox.markettong.util.ContactLoader;
 import com.itbox.markettong.util.Utils;
 import com.itbox.markettong.widget.CircleImageView;
 import com.squareup.picasso.Picasso;
@@ -16,7 +15,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;

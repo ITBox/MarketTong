@@ -48,7 +48,10 @@
             android:name="com.itbox.markettong.SettingActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="com.itbox.markettong"
+            android:exported="false" />
          <service android:name="com.itbox.markettong.dialog.OperateDialog" >
         </service>
     </application>

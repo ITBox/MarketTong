@@ -12,15 +12,15 @@ import com.itbox.markettong.widget.SideBar;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import android.annotation.SuppressLint;
-import android.content.AsyncQueryHandler;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ContactFragment extends BaseFragment implements OnItemClickListener{
+public class ContactFragment extends BaseFragment implements OnItemClickListener, LoaderCallbacks<Cursor>{
     @InjectView(R.id.search_ll)
     LinearLayout mSearchLL;
     @InjectView(R.id.search_tv)
@@ -42,7 +42,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
     @InjectView(R.id.sideBar)
     SideBar indexBar;
 	private TextView mDialogText;
-    private MyAsyncQueryHandler queryHandler;
+//    private MyAsyncQueryHandler queryHandler;
     private ArrayList<ContactsBean> contactList = new ArrayList<ContactsBean>();
 	private ContactAdapter contactAdapter;
     
@@ -54,7 +54,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 		contactAdapter = new ContactAdapter(mActThis, contactList);
 		mLLContact.setAdapter(contactAdapter);
 		mLLContact.setOnItemClickListener(this);
-		queryHandler = new MyAsyncQueryHandler(mActThis.getContentResolver());
+//		queryHandler = new MyAsyncQueryHandler(mActThis.getContentResolver());
 		
 		WindowManager mWindowManager = (WindowManager) mActThis.getSystemService(Context.WINDOW_SERVICE);
 		indexBar.setListView(mLLContact);
@@ -67,21 +67,31 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 	}
 	
 	@Override
-	public void onResume() {
-		super.onResume();
-//		contactList.clear();
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 		if (contactList != null && contactList.size() > 0) {
 			mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
 		} else {
-			queryHandler.startQuery(0, null, ContactsContract.Contacts.CONTENT_URI, ContactLoader.PROJECTION, null, null, "sort_key_alt");
+			getLoaderManager().initLoader(0, null, this);
 		}
 	}
+	
+//	@Override
+//	public void onResume() {
+//		super.onResume();
+////		contactList.clear();
+//		if (contactList != null && contactList.size() > 0) {
+//			mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
+//		} else {
+//			queryHandler.startQuery(0, null, ContactsContract.Contacts.CONTENT_URI, ContactLoader.PROJECTION, null, null, "sort_key_alt");
+//		}
+//	}
 	
 	@OnClick(R.id.search_ll)
 	public void clickSearch() {
 		startActivity(new Intent(mActThis, SearchActivity.class));
 	}
-	
+/*	
 	@SuppressLint("HandlerLeak")
 	private class MyAsyncQueryHandler extends AsyncQueryHandler {
 
@@ -120,12 +130,43 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 			}
 		}
 	}
-
+*/
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
 		ContactsBean contact = (ContactsBean) contactAdapter.getItem(position);
 		ContactsBean contactInfo = ContactLoader.queryContactInfo(mActThis, contact);
+		
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+		// TODO Auto-generated method stub
+		return new CursorLoader(mActThis, ContactsContract.Contacts.CONTENT_URI, ContactLoader.PROJECTION, null, null, "sort_key_alt");
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
+		ContactsBean bean = null;
+		while (cursor.moveToNext()) {
+			bean = new ContactsBean();
+			bean.setId(cursor.getLong(0));
+			bean.setName(cursor.getString(1));
+			bean.setPhotoId(cursor.getLong(2));
+			bean.setLetter(cursor.getString(3));
+			bean.setLastName(cursor.getString(1).substring(cursor.getString(1).length() - 1, cursor.getString(1).length()));
+			ContactsBean queryContactInfo = ContactLoader.queryContactInfo(mActThis, bean);
+			contactList.add(queryContactInfo);
+		}
+		if (contactList.size() > 0) {
+			mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
+			contactAdapter.setNewList(contactList);
+		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
