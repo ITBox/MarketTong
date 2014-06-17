@@ -6,6 +6,8 @@ import com.itbox.markettong.R;
 import com.itbox.markettong.SearchActivity;
 import com.itbox.markettong.adapter.ContactAdapter;
 import com.itbox.markettong.bean.ContactsBean;
+import com.itbox.markettong.dialog.DialogMessage;
+import com.itbox.markettong.dialog.DialogPhones;
 import com.itbox.markettong.util.ContactLoader;
 import com.itbox.markettong.widget.SideBar;
 
@@ -45,6 +47,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 //    private MyAsyncQueryHandler queryHandler;
     private ArrayList<ContactsBean> contactList = new ArrayList<ContactsBean>();
 	private ContactAdapter contactAdapter;
+	private DialogMessage dialogMessage;
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +75,9 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 		if (contactList != null && contactList.size() > 0) {
 			mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
 		} else {
+			dialogMessage = new DialogMessage();
+			dialogMessage.setMessage("加载中...");
+			dialogMessage.show(getFragmentManager(), "loadContact");
 			getLoaderManager().initLoader(0, null, this);
 		}
 	}
@@ -133,10 +139,10 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
 		ContactsBean contact = (ContactsBean) contactAdapter.getItem(position);
-		ContactsBean contactInfo = ContactLoader.queryContactInfo(mActThis, contact);
-		
+		DialogPhones dialogPhones = new DialogPhones();
+		dialogPhones.setBean(contact);
+		dialogPhones.show(getFragmentManager(), "phonesDialog");
 	}
 
 	@Override
@@ -161,6 +167,7 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 		if (contactList.size() > 0) {
 			mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
 			contactAdapter.setNewList(contactList);
+			dialogMessage.dissmissDialog();
 		}
 	}
 
