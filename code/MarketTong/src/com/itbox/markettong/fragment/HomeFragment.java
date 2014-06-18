@@ -6,6 +6,7 @@ import com.itbox.markettong.R;
 import com.itbox.markettong.adapter.HomeAdapter;
 import com.itbox.markettong.adapter.HomeAdapter.OnItemMoreClickListener;
 import com.itbox.markettong.dialog.OperateDialog;
+import com.itbox.markettong.jazzylistview.JazzyListView;
 import com.itbox.markettong.parallaxscroll.ParallaxListView;
 import com.itbox.markettong.util.Common;
 import com.itbox.markettong.util.ToastUtil;
@@ -23,7 +24,7 @@ import android.widget.TextView;
 
 public class HomeFragment extends BaseFragment implements OnItemClickListener, OnItemMoreClickListener {
 	@InjectView(R.id.list_view)
-	ParallaxListView mHomeListView;
+	JazzyListView mHomeListView;
 	@InjectView(R.id.add)
 	TextView mAdd;
 	private HomeAdapter homeAdapter;
