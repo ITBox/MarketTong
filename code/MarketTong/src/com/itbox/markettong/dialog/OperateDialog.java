@@ -2,6 +2,8 @@ package com.itbox.markettong.dialog;
 
 import com.itbox.markettong.R;
 
+import android.app.Notification;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -15,13 +17,13 @@ public class OperateDialog extends StandOutWindow {
 	@Override
 	public String getAppName() {
 		// TODO Auto-generated method stub
-		return "XXT";
+		return "XST";
 	}
 
 	@Override
 	public int getAppIcon() {
 		// TODO Auto-generated method stub
-		return 0;
+		return R.drawable.ic_launcher;
 	}
 
 	@Override
@@ -36,7 +38,21 @@ public class OperateDialog extends StandOutWindow {
 	@Override
 	public StandOutLayoutParams getParams(int id, Window window) {
 		return new StandOutLayoutParams(id, StandOutLayoutParams.MATCH_PARENT, StandOutLayoutParams.WRAP_CONTENT,
-				StandOutLayoutParams.BOTTOM, StandOutLayoutParams.BOTTOM);
+				StandOutLayoutParams.LEFT, StandOutLayoutParams.BOTTOM);
 	}
 
+	@Override
+	public int getFlags(int id) {
+		// TODO Auto-generated method stub
+		return super.getFlags(id);
+	}
+    @Override
+    public String getPersistentNotificationTitle(int id) {
+    	return "销售通提醒您";
+    }
+
+	@Override
+	public Intent getPersistentNotificationIntent(int id) {
+		return StandOutWindow.getCloseIntent(this, OperateDialog.class, id);
+	}
 }

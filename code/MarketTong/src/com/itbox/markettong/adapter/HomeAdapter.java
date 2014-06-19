@@ -35,9 +35,13 @@ public class HomeAdapter extends BaseAdapter {
 		quickAction.addActionItem(itemToCotact);
 		quickAction.addActionItem(itemDel);
 		quickAction.setOnActionItemClickListener(actionItemClickListener);
-		
 	}
-
+	private int num;
+    public void addData(int num) {
+    	this.num = num;
+    	notifyDataSetChanged();
+    }
+    
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -118,4 +122,5 @@ public class HomeAdapter extends BaseAdapter {
 	public interface OnItemMoreClickListener {
 		void onItemClick(int pos, int actionId);
 	}
+
 }
