@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.activeandroid.util.Log;
 import com.itbox.markettong.R;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -68,7 +69,11 @@ public class ResideMenu extends FrameLayout{
     //valid scale factor is between 0.0f and 1.0f.
     private float mScaleValue = 0.5f;
 
-    public ResideMenu(Context context) {
+    public List<Integer> getDisabledSwipeDirection() {
+		return disabledSwipeDirection;
+	}
+
+	public ResideMenu(Context context) {
         super(context);
         initViews(context);
     }
@@ -291,11 +296,13 @@ public class ResideMenu extends FrameLayout{
     }
     
     public void setSwipeDirectionEnable(int direction) {
-    	disabledSwipeDirection.remove(direction);
+    	disabledSwipeDirection.remove((Integer)direction);
     }
     
     public void setSwipeDirectionDisable(int direction){
-        disabledSwipeDirection.add(direction);
+    	if (!disabledSwipeDirection.contains(direction)) {
+    		disabledSwipeDirection.add(direction);
+		}
     }
 
     private boolean isInDisableDirection(int direction){

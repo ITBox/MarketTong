@@ -60,9 +60,6 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 		mLLContact.setAdapter(contactAdapter);
 		mLLContact.setOnItemClickListener(this);
 //		queryHandler = new MyAsyncQueryHandler(mActThis.getContentResolver());
-		ResideMenu resideMenu = MainActivity.getResideMenu();
-		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
-		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 		
 		WindowManager mWindowManager = (WindowManager) mActThis.getSystemService(Context.WINDOW_SERVICE);
 		indexBar.setListView(mLLContact);

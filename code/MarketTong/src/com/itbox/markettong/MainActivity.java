@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
 		resideMenu.setMenuListener(menuListener);
 		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
 		resideMenu.setScaleValue(0.6f);
-//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 //		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
 	}
 

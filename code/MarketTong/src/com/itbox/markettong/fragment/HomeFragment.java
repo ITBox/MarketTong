@@ -65,12 +65,14 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 		mHomeListView.setAdapter(homeAdapter);
 		mHomeListView.setOnItemClickListener(this);
 		ResideMenu resideMenu = MainActivity.getResideMenu();
-		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
-		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-//		resideMenu.setSwipeDirectionEnable(ResideMenu.DIRECTION_RIGHT);
 		resideMenu.setSwipeDirectionEnable(ResideMenu.DIRECTION_LEFT);
-//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 		return layout;
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		MainActivity.getResideMenu().setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
 	}
 
 	private void initDobList(ListView listview) {
