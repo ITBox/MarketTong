@@ -2,6 +2,7 @@ package com.itbox.markettong.fragment;
 
 import wei.mark.standout.StandOutWindow;
 
+import com.itbox.markettong.MainActivity;
 import com.itbox.markettong.R;
 import com.itbox.markettong.adapter.HomeAdapter;
 import com.itbox.markettong.adapter.HomeAdapter.OnItemMoreClickListener;
@@ -10,7 +11,7 @@ import com.itbox.markettong.doblist.DobList;
 import com.itbox.markettong.doblist.NoListViewException;
 import com.itbox.markettong.doblist.OnLoadMoreListener;
 import com.itbox.markettong.jazzylistview.JazzyListView;
-import com.itbox.markettong.parallaxscroll.ParallaxListView;
+import com.itbox.markettong.residemenu.ResideMenu;
 import com.itbox.markettong.systembartint.SystemBarTintManager;
 import com.itbox.markettong.util.Common;
 import com.itbox.markettong.util.ToastUtil;
@@ -24,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +64,12 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 		homeAdapter = new HomeAdapter(mActThis, HomeFragment.this);
 		mHomeListView.setAdapter(homeAdapter);
 		mHomeListView.setOnItemClickListener(this);
+		ResideMenu resideMenu = MainActivity.getResideMenu();
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+//		resideMenu.setSwipeDirectionEnable(ResideMenu.DIRECTION_RIGHT);
+		resideMenu.setSwipeDirectionEnable(ResideMenu.DIRECTION_LEFT);
+//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 		return layout;
 	}
 

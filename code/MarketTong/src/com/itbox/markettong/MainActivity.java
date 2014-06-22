@@ -3,20 +3,21 @@ package com.itbox.markettong;
 import com.itbox.markettong.fragment.ContactFragment;
 import com.itbox.markettong.fragment.HomeFragment;
 import com.itbox.markettong.fragment.MimeFragment;
+import com.itbox.markettong.residemenu.ResideMenu;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 
 public class MainActivity extends BaseActivity {
@@ -34,12 +35,46 @@ public class MainActivity extends BaseActivity {
 	// Tab选项卡的文字
 	private String mTextviewArray[] = { "首页", "通讯录", "我的" };
 
+	private static ResideMenu resideMenu;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_main);
 		ButterKnife.inject(this);
 		initViews();
+		setUpMenu();
+	}
+
+	private void setUpMenu() {
+		// TODO Auto-generated method stub
+		resideMenu = new ResideMenu(this);
+		resideMenu.setBackground(R.drawable.menu_background);
+		resideMenu.attachToActivity(this);
+		resideMenu.setMenuListener(menuListener);
+		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
+		resideMenu.setScaleValue(0.6f);
+//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+	}
+
+	private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
+		@Override
+		public void openMenu() {
+		}
+
+		@Override
+		public void closeMenu() {
+		}
+	};
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		return resideMenu.dispatchTouchEvent(ev);
+	}
+
+	public static ResideMenu getResideMenu() {
+		return resideMenu;
 	}
 
 	/**
@@ -71,7 +106,7 @@ public class MainActivity extends BaseActivity {
 
 		ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
 		imageView.setImageResource(mImageViewArray[index]);
- 
+
 		return view;
 	}
 

@@ -1,16 +1,17 @@
 package com.itbox.markettong.dialog;
 
-import com.itbox.markettong.R;
-
-import android.app.Notification;
-import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
 import wei.mark.standout.StandOutWindow;
-import wei.mark.standout.StandOutWindow.StandOutLayoutParams;
+import wei.mark.standout.constants.StandOutFlags;
 import wei.mark.standout.ui.Window;
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+
+import com.itbox.markettong.R;
+import com.itbox.markettong.util.DimenUtil;
 
 public class OperateDialog extends StandOutWindow {
 
@@ -27,24 +28,26 @@ public class OperateDialog extends StandOutWindow {
 	}
 
 	@Override
-	public void createAndAttachView(int id, FrameLayout frame) {
+	public void createAndAttachView(final int id, FrameLayout frame) {
 		// TODO Auto-generated method stub
-		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.dialog_action, frame, true);
-
-         
+        View.inflate(getApplicationContext(), R.layout.dialog_action, frame).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				close(id);
+			}
+		});;
 	}
 
 	@Override
 	public StandOutLayoutParams getParams(int id, Window window) {
-		return new StandOutLayoutParams(id, StandOutLayoutParams.MATCH_PARENT, StandOutLayoutParams.WRAP_CONTENT,
+		WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+		return new StandOutLayoutParams(id, wm.getDefaultDisplay().getWidth(), wm.getDefaultDisplay().getHeight() + DimenUtil.getStatusBarHeight(getApplicationContext()),
 				StandOutLayoutParams.LEFT, StandOutLayoutParams.BOTTOM);
 	}
 
 	@Override
 	public int getFlags(int id) {
-		// TODO Auto-generated method stub
-		return super.getFlags(id);
+		return super.getFlags(id) | StandOutFlags.FLAG_WINDOW_FOCUSABLE_DISABLE;
 	}
     @Override
     public String getPersistentNotificationTitle(int id) {

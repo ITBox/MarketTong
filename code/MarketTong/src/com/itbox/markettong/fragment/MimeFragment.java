@@ -9,8 +9,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
+import com.itbox.markettong.MainActivity;
 import com.itbox.markettong.R;
 import com.itbox.markettong.SettingActivity;
+import com.itbox.markettong.residemenu.ResideMenu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +40,9 @@ public class MimeFragment extends BaseFragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.fragment_mime, null);
 		ButterKnife.inject(this, layout);
+		ResideMenu resideMenu = MainActivity.getResideMenu();
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 		MimeCollectFragment collectFragment = new MimeCollectFragment();
 		MimeDelFragment delFragment = new MimeDelFragment();
 		fragmentsList.add(collectFragment);

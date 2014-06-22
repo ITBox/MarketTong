@@ -2,12 +2,14 @@ package com.itbox.markettong.fragment;
 
 import java.util.ArrayList;
 
+import com.itbox.markettong.MainActivity;
 import com.itbox.markettong.R;
 import com.itbox.markettong.SearchActivity;
 import com.itbox.markettong.adapter.ContactAdapter;
 import com.itbox.markettong.bean.ContactsBean;
 import com.itbox.markettong.dialog.DialogMessage;
 import com.itbox.markettong.dialog.DialogPhones;
+import com.itbox.markettong.residemenu.ResideMenu;
 import com.itbox.markettong.util.ContactLoader;
 import com.itbox.markettong.widget.SideBar;
 
@@ -58,6 +60,9 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 		mLLContact.setAdapter(contactAdapter);
 		mLLContact.setOnItemClickListener(this);
 //		queryHandler = new MyAsyncQueryHandler(mActThis.getContentResolver());
+		ResideMenu resideMenu = MainActivity.getResideMenu();
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 		
 		WindowManager mWindowManager = (WindowManager) mActThis.getSystemService(Context.WINDOW_SERVICE);
 		indexBar.setListView(mLLContact);
