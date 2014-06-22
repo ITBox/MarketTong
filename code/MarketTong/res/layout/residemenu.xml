@@ -15,7 +15,8 @@
             android:background="@drawable/shadow"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:visibility="invisible"/>
 
     <ScrollView
             android:id="@+id/sv_left_menu"

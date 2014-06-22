@@ -280,6 +280,7 @@ public class ResideMenu extends FrameLayout{
      */
     public void closeMenu(){
 
+    	imageViewShadow.setVisibility(View.INVISIBLE);
         isOpened = false;
         AnimatorSet scaleUp_activity = buildScaleUpAnimation(viewActivity, 1.0f, 1.0f);
         AnimatorSet scaleUp_shadow = buildScaleUpAnimation(imageViewShadow, 1.0f, 1.0f);
@@ -532,6 +533,7 @@ public class ResideMenu extends FrameLayout{
                         ev.setAction(MotionEvent.ACTION_CANCEL);
                     }
                 } else if(pressedState == PRESSED_MOVE_HORIZANTAL) {
+                	imageViewShadow.setVisibility(View.VISIBLE);
                     if (currentActivityScaleX < 0.95)
                         scrollViewMenu.setVisibility(VISIBLE);
 
