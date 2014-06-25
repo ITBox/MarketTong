@@ -9,10 +9,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-import com.itbox.markettong.MainActivity;
 import com.itbox.markettong.R;
 import com.itbox.markettong.SettingActivity;
-import com.itbox.markettong.residemenu.ResideMenu;
 
 import android.content.Intent;
 import android.os.Bundle;

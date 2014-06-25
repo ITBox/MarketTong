@@ -9,20 +9,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-         android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-        <com.itbox.markettong.widget.CircleImageView
-            android:id="@+id/contact_userPhoto"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="3dp"
-            android:src="@drawable/ic_contact_head"
-            app:border_color="@android:color/white"
-            app:border_width="2dp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp" >
+
+            <com.itbox.markettong.widget.CircleImageView
+                android:id="@+id/contact_userPhoto"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ic_contact_head"
+                android:visibility="visible"
+                app:border_color="#cccccc"
+                app:border_width="2dp" />
+
+            <TextView
+                android:id="@+id/contact_userPhoto_tv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,8 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:textColor="#B9BCBB"
-                 />
+                android:textColor="#B9BCBB" />
         </LinearLayout>
     </LinearLayout>
 
