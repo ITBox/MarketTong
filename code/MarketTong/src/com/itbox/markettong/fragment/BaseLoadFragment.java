@@ -38,14 +38,19 @@ public class BaseLoadFragment<T extends Model> extends BaseFragment implements L
 
 	protected void saveData(int page, List<T> list) {
 		ActiveAndroid.beginTransaction();
-		new Delete().from(mClazz).where(mSelection).execute();
-		if (list != null) {
-			for (T er : list) {
-				er.save();
+		try {
+			new Delete().from(mClazz).where(mSelection).execute();
+			if (list != null) {
+				for (T er : list) {
+					er.save();
+				}
 			}
+			ActiveAndroid.setTransactionSuccessful();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			ActiveAndroid.endTransaction();
 		}
-		ActiveAndroid.setTransactionSuccessful();
-		ActiveAndroid.endTransaction();
 	}
 
 	@Override
