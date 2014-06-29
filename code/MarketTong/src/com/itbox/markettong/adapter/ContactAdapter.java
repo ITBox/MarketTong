@@ -9,7 +9,9 @@ import com.itbox.markettong.R;
 import com.itbox.markettong.bean.ContactsBean;
 import com.itbox.markettong.util.Utils;
 import com.itbox.markettong.widget.CircleImageView;
+import com.squareup.picasso.Cache;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import android.content.ContentUris;
 import android.content.Context;

@@ -2,15 +2,14 @@ package com.itbox.markettong.fragment;
 
 import java.util.ArrayList;
 
-import com.itbox.markettong.MainActivity;
 import com.itbox.markettong.R;
 import com.itbox.markettong.SearchActivity;
 import com.itbox.markettong.adapter.ContactAdapter;
 import com.itbox.markettong.bean.ContactsBean;
 import com.itbox.markettong.dialog.DialogMessage;
 import com.itbox.markettong.dialog.DialogPhones;
-import com.itbox.markettong.residemenu.ResideMenu;
 import com.itbox.markettong.util.ContactLoader;
+import com.itbox.markettong.util.ToastUtil;
 import com.itbox.markettong.widget.SideBar;
 
 import butterknife.ButterKnife;
@@ -46,20 +45,17 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
     @InjectView(R.id.sideBar)
     SideBar indexBar;
 	private TextView mDialogText;
-//    private MyAsyncQueryHandler queryHandler;
     private ArrayList<ContactsBean> contactList = new ArrayList<ContactsBean>();
 	private ContactAdapter contactAdapter;
 	private DialogMessage dialogMessage;
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		View layout = inflater.inflate(R.layout.fragment_contact, null);
 		ButterKnife.inject(this, layout);
 		contactAdapter = new ContactAdapter(mActThis, contactList);
 		mLLContact.setAdapter(contactAdapter);
 		mLLContact.setOnItemClickListener(this);
-//		queryHandler = new MyAsyncQueryHandler(mActThis.getContentResolver());
 		
 		WindowManager mWindowManager = (WindowManager) mActThis.getSystemService(Context.WINDOW_SERVICE);
 		indexBar.setListView(mLLContact);
@@ -84,67 +80,21 @@ public class ContactFragment extends BaseFragment implements OnItemClickListener
 		}
 	}
 	
-//	@Override
-//	public void onResume() {
-//		super.onResume();
-////		contactList.clear();
-//		if (contactList != null && contactList.size() > 0) {
-//			mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
-//		} else {
-//			queryHandler.startQuery(0, null, ContactsContract.Contacts.CONTENT_URI, ContactLoader.PROJECTION, null, null, "sort_key_alt");
-//		}
-//	}
-	
 	@OnClick(R.id.search_ll)
 	public void clickSearch() {
 		startActivity(new Intent(mActThis, SearchActivity.class));
 	}
-/*	
-	@SuppressLint("HandlerLeak")
-	private class MyAsyncQueryHandler extends AsyncQueryHandler {
-
-		public MyAsyncQueryHandler(ContentResolver cr) {
-			super(cr);
-		}
-
-		@Override
-		protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
-			ContactsBean bean = null;
-//			String tmp = "";
-			while (cursor.moveToNext()) {
-				bean = new ContactsBean();
-				bean.setId(cursor.getLong(0));
-				// bean.setContactId(cursor.getInt(1));
-				bean.setName(cursor.getString(1));
-				bean.setPhotoId(cursor.getLong(2));
-				bean.setLetter(cursor.getString(3));
-				bean.setLastName(cursor.getString(1).substring(cursor.getString(1).length() - 1, cursor.getString(1).length()));
-//				bean.setType(ContactsBean.ITEM);
-//				if (!bean.getLetter().equals(tmp)) {
-//					ContactsBean section = new ContactsBean();
-//					section.setType(ContactsBean.SECTION);
-//					section.setName(bean.getName());
-//					section.setLetter(bean.getLetter());
-//					contactList.add(section);
-//					tmp = bean.getLetter();
-//				}
-				ContactsBean queryContactInfo = ContactLoader.queryContactInfo(mActThis, bean);
-				contactList.add(queryContactInfo);
-			}
-			cursor.close();
-			if (contactList.size() > 0) {
-				mSearchUserNum.setText("搜索"+contactList.size()+"位联系人");
-				contactAdapter.setNewList(contactList);
-			}
-		}
-	}
-*/
+	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		ContactsBean contact = (ContactsBean) contactAdapter.getItem(position);
-		DialogPhones dialogPhones = new DialogPhones();
-		dialogPhones.setBean(contact);
-		dialogPhones.show(getFragmentManager(), "phonesDialog");
+		if (contact.getPhones().size() > 0) {
+			DialogPhones dialogPhones = new DialogPhones();
+			dialogPhones.setBean(contact);
+			dialogPhones.show(getFragmentManager(), "phonesDialog");
+		} else {
+			ToastUtil.showMsg(mActThis, "此联系人没有号码");
+		}
 	}
 
 	@Override
