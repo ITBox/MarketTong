@@ -2,6 +2,7 @@ package com.itbox.markettong.fragment;
 
 import wei.mark.standout.StandOutWindow;
 
+import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.itbox.markettong.MainActivity;
 import com.itbox.markettong.R;
 import com.itbox.markettong.adapter.HomeAdapter;
@@ -14,25 +15,39 @@ import com.itbox.markettong.jazzylistview.JazzyListView;
 import com.itbox.markettong.residemenu.ResideMenu;
 import com.itbox.markettong.systembartint.SystemBarTintManager;
 import com.itbox.markettong.util.Common;
+import com.itbox.markettong.util.DimenUtil;
 import com.itbox.markettong.util.ToastUtil;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor>, OnItemClickListener, OnItemMoreClickListener {
@@ -40,8 +55,13 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 	JazzyListView mHomeListView;
 	@InjectView(R.id.add)
 	TextView mAdd;
+	@InjectView(R.id.home_title)
+	RelativeLayout mHomeTitle;
 	private HomeAdapter homeAdapter;
 	private DobList dobList;
+	private View mPopView;
+	private PopupWindow pw;
+	private int homeTitleHigh;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,24 +74,51 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 		tintManager.setNavigationBarTintEnabled(true);
 		tintManager.setStatusBarTintResource(R.color.bg_master);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.fragment_home, null);
 		ButterKnife.inject(this, layout);
-//		initDobList(mHomeListView);
+		// initDobList(mHomeListView);
 		homeAdapter = new HomeAdapter(mActThis, HomeFragment.this);
 		mHomeListView.setAdapter(homeAdapter);
 		mHomeListView.setOnItemClickListener(this);
 		ResideMenu resideMenu = MainActivity.getResideMenu();
 		resideMenu.setSwipeDirectionEnable(ResideMenu.DIRECTION_LEFT);
+
+		mPopView = LayoutInflater.from(mActThis).inflate(R.layout.fragment_add_pop, null);
+		pw = new PopupWindow(mPopView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
+		new PopView(mPopView);
 		return layout;
 	}
-	
+
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		MainActivity.getResideMenu().setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+	}
+
+	public class PopView {
+		@InjectView(R.id.add_sd)
+		ImageView mAddSd;
+
+		public PopView(View view) {
+			ButterKnife.inject(this, view);
+			// TODO Auto-generated constructor stub
+		}
+
+		@OnClick(R.id.add_sd)
+		public void AddSd() {
+			Intent target = FileUtils.createGetContentIntent();
+			// Create the chooser Intent
+			Intent intent = Intent.createChooser(target, getString(R.string.chooser_title));
+			try {
+				startActivityForResult(intent, Common.ADD_SD_REQUEST);
+				pw.dismiss();
+			} catch (ActivityNotFoundException e) {
+				// The reason for the existence of aFileChooser
+			}
+		}
 	}
 
 	private void initDobList(ListView listview) {
@@ -80,7 +127,7 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 			dobList.register(listview);
 			dobList.addDefaultLoadingFooterView();
 			dobList.setOnLoadMoreListener(new OnLoadMoreListener() {
-				
+
 				@Override
 				public void onLoadMore(int totalItemCount) {
 					// TODO Auto-generated method stub
@@ -96,11 +143,10 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 
 	private void addData(int i) {
 		// TODO Auto-generated method stub
-		
-	}
-	
 
-	@TargetApi(19) 
+	}
+
+	@TargetApi(19)
 	private void setTranslucentStatus(boolean on) {
 		Window win = mActThis.getWindow();
 		WindowManager.LayoutParams winParams = win.getAttributes();
@@ -112,11 +158,35 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 		}
 		win.setAttributes(winParams);
 	}
-	
+
 	@OnClick(R.id.add)
 	public void add() {
-		StandOutWindow.closeAll(mActThis, OperateDialog.class);
-		StandOutWindow.show(mActThis, OperateDialog.class, StandOutWindow.DEFAULT_ID);
+		// StandOutWindow.closeAll(mActThis, OperateDialog.class);
+		// StandOutWindow.show(mActThis, OperateDialog.class,
+		// StandOutWindow.DEFAULT_ID);
+		showPop();
+	}
+
+	private void showPop() {
+		// TODO Auto-generated method stub
+//		ViewTreeObserver treeObserver = mHomeTitle.getViewTreeObserver();
+//		treeObserver.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+//
+//			@SuppressWarnings("deprecation")
+//			@Override
+//			public void onGlobalLayout() {
+//				mHomeTitle.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//				homeTitleHigh = mHomeTitle.getHeight();
+//			}
+//		});
+		// pw.setBackgroundDrawable(new
+		// ColorDrawable(Color.parseColor("#66000000")));
+		pw.setBackgroundDrawable(new BitmapDrawable());
+		pw.showAsDropDown(mAdd, 0, homeTitleHigh + 12);
+		pw.setAnimationStyle(R.style.popwin_anim_style);
+		pw.setFocusable(true);
+		pw.setOutsideTouchable(true);
+		pw.update();
 	}
 
 	@Override
@@ -152,13 +222,37 @@ public class HomeFragment extends BaseFragment implements LoaderCallbacks<Cursor
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> arg0) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (resultCode == mActThis.RESULT_OK) {
+			switch (requestCode) {
+			case Common.ADD_SD_REQUEST:
+				if (data != null) {
+					final Uri uri = data.getData();
+					try {
+						final String path = FileUtils.getPath(mActThis, uri);
+						ToastUtil.showMsg(mActThis, "File Selected: " + path);
+					} catch (Exception e) {
+					}
+				}
+				break;
+
+			default:
+				break;
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 }
