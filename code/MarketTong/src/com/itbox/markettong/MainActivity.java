@@ -9,6 +9,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,10 +53,11 @@ public class MainActivity extends BaseActivity {
 		resideMenu.setBackground(R.drawable.menu_background);
 		resideMenu.attachToActivity(this);
 		resideMenu.setMenuListener(menuListener);
-		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
+		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is
+		// 150dip.
 		resideMenu.setScaleValue(0.6f);
 		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+		// resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
 	}
 
 	private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
@@ -110,6 +112,29 @@ public class MainActivity extends BaseActivity {
 		return view;
 	}
 
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu) {
+		if (mTabHost.getCurrentTabTag().equals("首页")) {
+			if (resideMenu.isOpened()) {
+				resideMenu.closeMenu();
+			} else {
+				resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+			}
+		}
+		return super.onMenuOpened(featureId, menu);
+	}
+
+	@Override
+	public void onOptionsMenuClosed(Menu menu) {
+		if (mTabHost.getCurrentTabTag().equals("首页")) {
+			if (resideMenu.isOpened()) {
+				resideMenu.closeMenu();
+			} else {
+				resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+			}
+		}
+		super.onOptionsMenuClosed(menu);
+	}
 	// @Override
 	// public boolean onCreateOptionsMenu(Menu menu) {
 	// // Inflate the menu; this adds items to the action bar if it is present.
